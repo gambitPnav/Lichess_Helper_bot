@@ -33,8 +33,7 @@ async def handle_message(update, context):
     except:
         await update.message.reply_text("No such user found or account has been closed🚫!")
         
-    print(f'ID: {feed['count']['all']}')
-
+    print(f"ID: {feed['count']['all']}")
  
 
     s1=f'ID: {feed['id']}'
@@ -60,7 +59,7 @@ async def error(update, context):
 
 # Main bot setup
 if __name__ == '__main__':
-    print("Starting the bot...")
+    # print("Starting the bot...")
     app = Application.builder().token(tele_token).build()
 
     app.add_handler(CommandHandler('start', start_command))
