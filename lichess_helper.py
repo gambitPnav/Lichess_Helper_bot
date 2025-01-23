@@ -36,11 +36,12 @@ async def handle_message(update, context):
     print(f"ID: {feed['count']['all']}")
  
 
-    s1=f'ID: {feed['id']}'
-    s2=f'Bullet : {feed['perfs']['bullet']['rating']}'
-    s3=f'Blitz    : {feed['perfs']['blitz']['rating']}'
-    s4=f'Rapid : {feed['perfs']['rapid']['rating']}'
-    s5=f'Games: {feed['count']['all']}'
+    s1 = f"ID: {feed['id']}"
+    s2 = f"Bullet : {feed['perfs']['bullet']['rating']}"
+    s3 = f"Blitz    : {feed['perfs']['blitz']['rating']}"
+    s4 = f"Rapid : {feed['perfs']['rapid']['rating']}"
+    s5 = f"Games: {feed['count']['all']}"
+
     
 
     s5=f"""{s1}\n{s2}\n{s3}\n{s4}\n{s5}"""
