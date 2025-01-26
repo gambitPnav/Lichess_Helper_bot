@@ -20,6 +20,9 @@ async def start_command (update, context):
 async def handle_message(update, context):
     feed=update.message.text.strip()
     chat_type=update.message.chat.type
+    chat_id=update.message.chat_id
+    
+
     if chat_type=='group':
         if username in feed:
             feed=feed.replace(username,'').strip()
@@ -27,26 +30,50 @@ async def handle_message(update, context):
             return
 
     print('Enter your lichess username to display stats: ')
-    print(f'id is {feed}')
+    demo=client.users.get_public_data('gambit_pnav')
+    print(demo)
     try:
         feed = client.users.get_public_data(feed)
+        if 'disabled' in str(feed):  
+            await update.message.reply_text("Account has been closed🚫!")
+          
     except:
-        await update.message.reply_text("No such user found or account has been closed🚫!")
-        
-    print(f"ID: {feed['count']['all']}")
- 
+        await update.message.reply_text("No such user found🚫!")
+       
 
     s1 = f"ID: {feed['id']}"
+
+    s0="           Rating   Games"
+
     s2 = f"Bullet : {feed['perfs']['bullet']['rating']}"
+    if 'bullet' not in feed['perfs']:
+        s2="Bullet: ?"
+    elif 'prov' in feed['perfs']['bullet']:
+        s2=s2+'?'
+    s2=s2+f"""   {feed['perfs']['bullet']['games']}"""
+
     s3 = f"Blitz    : {feed['perfs']['blitz']['rating']}"
-    s4 = f"Rapid : {feed['perfs']['rapid']['rating']}"
-    s5 = f"Games: {feed['count']['all']}"
-
+    if 'blitz' not in feed['perfs']:
+        s3="Blitz: ?"
+    elif 'prov' in feed['perfs']['blitz']:
+        s3=s3+'?'
     
+    s3=s3+f"""   {feed['perfs']['blitz']['games']}"""
 
-    s5=f"""{s1}\n{s2}\n{s3}\n{s4}\n{s5}"""
+    s4 = f"Rapid : {feed['perfs']['rapid']['rating']}"
+    if 'rapid' not in feed['perfs']:
+        s4="Rapid: ?"
+    elif 'prov' in feed['perfs']['rapid']:
+        s4=s4+'?'
+    s4=s4+f"""   {feed['perfs']['bullet']['games']}"""
+    s5 = f"Games: {feed['count']['all']}"
+    
+        
+    s5=f"""{s1}\n{s0}\n{s2}\n{s3}\n{s4}\n{s5}"""
+   
 
     await update.message.reply_text(s5)
+
 
    
 
